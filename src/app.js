@@ -28,17 +28,17 @@ angular.module('kidmath', ['ionic'])
     .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html',
+    templateUrl: 'menu.html',
   })
 
-  .state('app.browse', {
-    url: '/browse',
+  .state('app.home', {
+    url: '/home',
     views: {
       'menuContent': {
-        templateUrl: 'templates/browse.html'
+        template: '<km-home></km-home>'
       }
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/browse');
+  $urlRouterProvider.otherwise('/app/home');
 });
