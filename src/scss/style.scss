@@ -1,0 +1,55 @@
+output {
+  display: inline-block;
+  height: 50px;
+  font-size: 2.5em;
+  width: 60%;
+  border: 2px solid black;
+  line-height: 1.2em;
+  margin-bottom: 1em;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.math-problem {
+  font-size: 4em;
+  line-height: 1em;
+  font-weight: 900;
+
+  .first-number {
+    display: inline-block;
+  }
+
+  .operand {
+    display: inline-block;
+  }
+
+  .second-number {
+    display: inline-block;
+  }
+}
+
+
+.keypad {
+  position: absolute;
+  bottom: 0;
+
+  button {
+    border: 1px solid gray;
+    display: inline;
+    font-size: 2.3em;
+    font-weight: 200;
+
+    &:active {
+      background-color: dimgray;
+      color: whitesmoke;
+    }
+  }
+}
+
+.answer-button {
+  font-size: 2.3em;
+  width: 80%;
+  font-weight: 600;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
