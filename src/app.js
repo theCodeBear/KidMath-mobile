@@ -25,10 +25,24 @@ angular.module('kidmath', ['ionic'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('login', {
+    url: '/login',
+    template: '<km-login></km-login>'
+  })
+
+  .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'menu.html',
+  })
+
+  .state('app.maths', {
+    url: '/maths',
+    views: {
+      'menuContent': {
+        template: '<km-maths></km-maths>'
+      }
+    }
   })
 
   .state('app.home', {
@@ -40,5 +54,5 @@ angular.module('kidmath', ['ionic'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/home');
+  $urlRouterProvider.otherwise('/login');
 });
