@@ -4,7 +4,6 @@ angular.module('kidmath')
 
 .directive('kmDisplayProblem', kmDisplayProblem);
 
-kmDisplayProblem.$inject = [];
 function kmDisplayProblem() {
   return {
     restrict: 'E',

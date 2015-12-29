@@ -5,7 +5,6 @@ angular.module('kidmath')
 .directive('kmKeypad', kmKeypad);
 
 
-kmKeypad.$inject = [];
 function kmKeypad() {
   return {
     restrict: 'E',

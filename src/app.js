@@ -45,11 +45,11 @@ angular.module('kidmath', ['ionic'])
     }
   })
 
-  .state('app.home', {
-    url: '/home',
+  .state('app.problems', {
+    url: '/problems/:type/:level',
     views: {
       'menuContent': {
-        template: '<km-home></km-home>'
+        template: '<km-problems></km-problems>'
       }
     }
   });

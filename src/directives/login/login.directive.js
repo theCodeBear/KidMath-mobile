@@ -4,7 +4,6 @@ angular.module('kidmath')
 
 .directive('kmLogin', kmLogin);
 
-kmLogin.$inject = [];
 function kmLogin() {
   return {
     restrict: 'E',
