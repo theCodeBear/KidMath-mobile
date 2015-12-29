@@ -5,13 +5,11 @@ angular.module('kidmath')
 .directive('kmProblems', kmProblems);
 
 
-function kmProblems($stateParams) {
+function kmProblems() {
   return {
     restrict: 'E',
-    bindToController: true,
-    scope: {
-      yo: '='
-    },
+    scope: {},
+    bindToController: {},
     controller: kmProblemsCtrl,
     controllerAs: 'vmProblems',
     templateUrl: 'directives/problems/problems.template.html'
@@ -21,8 +19,18 @@ function kmProblems($stateParams) {
 kmProblemsCtrl.$inject = ['$stateParams'];
 function kmProblemsCtrl($stateParams) {
   let vmProblems = this;
-  console.log('vm', vmProblems)
-  console.log($stateParams.type)
-  console.log($stateParams.level)
-  console.log($stateParams)
+
+  vmProblems.mathType = chooseOperand($stateParams.type);
+  vmProblems.level = $stateParams.level;
+}
+
+function chooseOperand(type) {
+  switch(type) {
+    case 'addition':        return '+';
+    case 'subtraction':     return '&#8722;';
+    case 'multiplication':  return '&#215;';
+    case 'division':        return '&#247;';
+    case 'arithmetic':      return ['+', '&#8722;', '&#215;', '&#247;'];
+    default:                throw new Error('problem type did not match defined types');
+  }
 }

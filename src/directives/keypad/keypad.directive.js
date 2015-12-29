@@ -8,22 +8,23 @@ angular.module('kidmath')
 function kmKeypad() {
   return {
     restrict: 'E',
-    bindToController: true,
     scope: {},
+    bindToController: {},
     controller: kmKeypadCtrl,
     controllerAs: 'vmKeypad',
     templateUrl: 'directives/keypad/keypad.template.html'
   };
 }
 
-
-function kmKeypadCtrl() {
+kmKeypadCtrl.$inject = ['$rootScope', 'MathProblem'];
+function kmKeypadCtrl($rootScope, MathProblem) {
   let vmKeypad = this;
 
   vmKeypad.answer = '0';
   vmKeypad.updateAnswer = updateAnswer;
   vmKeypad.backspace = backspace;
   vmKeypad.reset = () => vmKeypad.answer = '0';
+  vmKeypad.checkAnswer = checkAnswer;
 
   function updateAnswer(input) {
     if (input === '-' && vmKeypad.answer === '0') vmKeypad.answer = '-'.concat(vmKeypad.answer);
@@ -39,5 +40,15 @@ function kmKeypadCtrl() {
     if (vmKeypad.answer === '0' || vmKeypad.answer === '-1') vmKeypad.answer = '0';
     else if (vmKeypad.answer.length === 1 || (vmKeypad.answer.length === 2 && vmKeypad.answer[0] === '-')) vmKeypad.answer = '0';
     else vmKeypad.answer = vmKeypad.answer.slice(0,-1);
+  }
+
+  function checkAnswer(answer) {
+    // answer correct
+    if (MathProblem.checkAnswer(answer)) {
+      vmKeypad.reset();
+      $rootScope.$broadcast('correct answer');
+    } else {    // answer wrong
+      console.log('WRONG');
+    }
   }
 }

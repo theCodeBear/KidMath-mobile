@@ -1,9 +1,9 @@
 <div class='math-problem text-center'>
   <div class='row'>
-    <div class='first-number col col-offset-33 col-50 text-right'>5</div>
+    <div class='first-number col col-offset-33 col-50 text-right'>{{vmDisplayProblem.problem.operands[0]}}</div>
   </div>
   <div class='row'>
-    <div class='operand col col-33 text-right'>+</div>
-    <div class='second-number col col-50 text-right'>10</div>
+    <div class='operand col col-33 text-right' ng-bind-html='vmDisplayProblem.problem.operator'></div>
+    <div class='second-number col col-50 text-right'>{{vmDisplayProblem.problem.operands[1]}}</div>
   </div>
 </div>

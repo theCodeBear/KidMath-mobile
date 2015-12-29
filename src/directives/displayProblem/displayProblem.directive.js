@@ -7,14 +7,23 @@ angular.module('kidmath')
 function kmDisplayProblem() {
   return {
     restrict: 'E',
-    bindToController: true,
     scope: {},
+    bindToController: {
+      operator: '=',
+      level: '='
+    },
     controller: kmDisplayProblemCtrl,
     controllerAs: 'vmDisplayProblem',
     templateUrl: 'directives/displayProblem/displayProblem.template.html'
   };
 }
 
-function kmDisplayProblemCtrl() {
+kmDisplayProblemCtrl.$inject = ['$scope', 'MathProblem'];
+function kmDisplayProblemCtrl($scope, MathProblem) {
   let vmDisplayProblem = this;
+  vmDisplayProblem.problem = MathProblem.createProblem(vmDisplayProblem.operator, vmDisplayProblem.level);
+
+  $scope.$on('correct answer', () => {
+    vmDisplayProblem.problem = MathProblem.createProblem(vmDisplayProblem.operator, vmDisplayProblem.level);
+  });
 }
