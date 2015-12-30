@@ -8,6 +8,7 @@ MathProblem.$inject = [];
 function MathProblem() {
 
   let answer;
+  let remainder;
 
   const service = {
     createProblem,
@@ -112,12 +113,9 @@ function MathProblem() {
         break;
     }
     let operands = [];
-    for (let i=0; i<options.operands; i++) {
-      console.log('ops', operands);
+    for (let i=0; i<options.operands; i++)
       operands.push(makeOperand(options, (i && !options.negatives) ? difference(operands.slice(0,i)) : null, 'subtract'));
-    }
     answer = difference(operands);
-    console.log('ans', answer);
     return operands;
   }
 
@@ -164,56 +162,73 @@ function MathProblem() {
   }
 
   function division(level) {
-    const options = { operands: 2, baseMax: 10, negatives: false };
+    const options = { dividendMaxSqrt: 5, dividendMax: 25, negatives: false, remainder: false };
+    /* second number can never be zero, remainders answers are always positive
+    1: dividend max 25
+    2: dividend max 100
+    3: dividend max 100, negatives
+    4: 25, remainders
+    5: 100, remainders
+    6: 900, negatives
+    7: 1000, remainders
+    */
     switch(level) {
       case '2':
-        options.baseMax = 20;
+        options.dividendMaxSqrt = 10;
         break;
       case '3':
-        options.baseMax = 50;
+        options.dividendMaxSqrt = 10;
+        options.negatives = true;
         break;
       case '4':
-        options.baseMax = 30;
-        options.negatives = true;
+        options.remainder = true;
         break;
       case '5':
-        options.baseMax = 30;
-        options.negatives = true;
+        options.dividendMax = 100;
+        options.remainder = true;
         break;
       case '6':
-        options.baseMax = 2000;
+        options.dividendMaxSqrt = 30;
         options.negatives = true;
         break;
       case '7':
-        options.baseMax = 4000;
-        options.negatives = true;
+        options.dividendMax = 1000;
+        options.remainder = true;
         break;
       default:
         break;
     }
-    let operands = [];
-    for (let i=0; i<options.operands; i++)
-      operands.push(makeOperand(options));
-    answer = quotient(operands);
+    let operands = makeDivisionOperands(options);
     return operands;
   }
 
-  // options: baseMin, baseMax, negatives
-  function makeOperand({baseMin, baseMax, negatives}, prevOperand, type) {
-    console.log('max before', baseMax);
+  function makeOperand({baseMin, baseMax, negatives}, prevOperand, specialRules) {
     let operand = null;
     if (prevOperand !== null) {
-      console.log('prevOperand is true');
-      if (type === 'subtract') baseMax = prevOperand;
-      else if (type === 'oneTwoThree') baseMax = 3;
-      else if (type === 'sameAsLast') operand = prevOperand;
+      if (specialRules === 'subtract') baseMax = prevOperand;
+      else if (specialRules === 'oneTwoThree') baseMax = 3;
+      else if (specialRules === 'sameAsLast') operand = prevOperand;
     }
-    console.log('new operand', operand);
-    console.log('prevOp', prevOperand);
-    console.log('max after', baseMax);
     // the baseMax+1 is so that the actual baseMax can be hit instead of <baseMax (due to Math.floor)
     operand = (operand !== null) ? operand : Math.floor(Math.random() * (baseMax+1 - baseMin)) + baseMin;
     return (negatives && Math.random() > .5) ? operand *= -1 : operand;
+  }
+
+  function makeDivisionOperands({dividendMaxSqrt, dividendMax, negatives, remainder}) {
+    let divisor, dividend;
+    if (remainder) {
+      dividend = Math.floor(Math.random() * (dividendMax + 1));
+      divisor = Math.ceil(Math.random() * (dividendMax / 5));
+      answer = Math.floor(dividend / divisor);
+      remainder = dividend % divisor;
+    } else {
+      divisor = Math.ceil(Math.random() * dividendMaxSqrt);
+      if (negatives && Math.random() < .5) divisor *= -1;
+      answer = Math.floor(Math.random() * (dividendMaxSqrt + 1));
+      if (negatives && Math.random() < .6) answer *= -1;
+      dividend = answer * divisor;
+    }
+    return [dividend, divisor];
   }
 
   function sum(operands) {
@@ -228,8 +243,8 @@ function MathProblem() {
     return operands.reduce((prev, next) => prev * next, 1);
   }
 
-  function quotient(operands) {
-    return operands.reduce((prev, next) => prev / (next || 1), Math.pow(operands[0],2));
-  }
+  // function quotient(operands) {
+  //   return operands.reduce((prev, next) => prev / (next || 1), Math.pow(operands[0],2));
+  // }
 
 }
