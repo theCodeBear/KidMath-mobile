@@ -44,33 +44,33 @@ function MathProblem() {
   }
 
   function addition(level) {
-    const options = { baseMin: 0, baseMax: 10, operands: 2, difficultyFactor: 1, negatives: false };
+    const options = { baseMin: 0, baseMax: 10, operands: 2, negatives: false };
     switch(level) {
       case '2':
-        options.difficultyFactor = 2;
+        options.baseMax = 20;
         break;
       case '3':
-        options.difficultyFactor = 2;
+        options.baseMax = 20;
         options.negatives = true;
         break;
       case '4':
-        options.difficultyFactor = 10;
+        options.baseMax = 100;
         options.negatives = true;
         break;
       case '5':
-        options.difficultyFactor = 10;
+        options.baseMax = 100;
         options.negatives = true;
         options.operands = 3;
         break;
       case '6':
-        options.difficultyFactor = 1000;
+        options.baseMax = 1000;
         options.negatives = true;
         options.operands = 3;
         break;
       case '7':
-        options.difficultyFactor = 1000;
+        options.baseMax = 10000;
         options.negatives = true;
-        options.operands = 4;
+        options.operands = 3;
         break;
       default:
         break;
@@ -83,32 +83,30 @@ function MathProblem() {
   }
 
   function subtraction(level) {
-    const options = { baseMin: 0, baseMax: 10, operands: 2, difficultyFactor: 1 , negatives: false };
+    const options = { baseMin: 0, baseMax: 10, operands: 2, negatives: false };
     switch(level) {
       case '2':
-        options.difficultyFactor = 2;
+        options.baseMax = 20;
         break;
       case '3':
-        options.difficultyFactor = 10;
+        options.baseMax = 100;
         break;
       case '4':
-        options.difficultyFactor = 10;
-        options.operands = 3;
+        options.baseMax = 20;
+        options.negatives = true;
         break;
       case '5':
-        options.difficultyFactor = 10;
+        options.baseMax = 100;
         options.negatives = true;
-        options.operands = 3;
         break;
       case '6':
-        options.difficultyFactor = 1000;
+        options.baseMax = 1000;
         options.negatives = true;
-        options.operands = 3;
         break;
       case '7':
-        options.difficultyFactor = 1000;
+        options.baseMax = 10000;
         options.negatives = true;
-        options.operands = 4;
+        options.operands = 3;
         break;
       default:
         break;
@@ -124,7 +122,7 @@ function MathProblem() {
   }
 
   function multiplication(level) {
-    const options = { baseMin: 0, baseMax: 5, operands: 2, difficultyFactor: 1, negatives: false };
+    const options = { baseMin: 0, baseMax: 5, operands: 2, negatives: false };
     let specialRules;
     switch(level) {
       case '1':     // second operand only 1, 2, or 3
@@ -133,11 +131,11 @@ function MathProblem() {
         specialRules = 'oneTwoThree';
         break;
       case '3':     // squares only
-        options.difficultyFactor = 2;
+        options.baseMax = 10;
         specialRules = 'sameAsLast';
         break;
       case '4':
-        options.difficultyFactor = 2;
+        options.baseMax = 10;
         options.negatives = true;
         break;
       case '5':  // doing cubes only, and only up to 5 (with negatives)
@@ -146,16 +144,16 @@ function MathProblem() {
         specialRules = 'sameAsLast';
         break;
       case '6':  // doing cubes only, and up to 10 (with negatives)
-        options.difficultyFactor = 2;
+        options.baseMax = 10;
         options.negatives = true;
         options.operands = 3;
         specialRules = 'sameAsLast';
         break;
       case '7':
-        options.difficultyFactor = 3;
+        options.baseMax = 15;
         options.negatives = true;
         break;
-      default:  // uses default options
+      default:
         break;
     }
     let operands = [];
@@ -166,28 +164,28 @@ function MathProblem() {
   }
 
   function division(level) {
-    const options = { operands: 2, baseMax: 10, difficultyFactor: 1, negatives: false };
+    const options = { operands: 2, baseMax: 10, negatives: false };
     switch(level) {
       case '2':
-        options.difficultyFactor = 2;
+        options.baseMax = 20;
         break;
       case '3':
-        options.difficultyFactor = 5;
+        options.baseMax = 50;
         break;
       case '4':
-        options.difficultyFactor = 3;
+        options.baseMax = 30;
         options.negatives = true;
         break;
       case '5':
-        options.difficultyFactor = 3;
+        options.baseMax = 30;
         options.negatives = true;
         break;
       case '6':
-        options.difficultyFactor = 200;
+        options.baseMax = 2000;
         options.negatives = true;
         break;
       case '7':
-        options.difficultyFactor = 200;
+        options.baseMax = 4000;
         options.negatives = true;
         break;
       default:
@@ -200,8 +198,8 @@ function MathProblem() {
     return operands;
   }
 
-  // options: baseMin, baseMax, difficultyFactor, negatives
-  function makeOperand({baseMin, baseMax, difficultyFactor, negatives}, prevOperand, type) {
+  // options: baseMin, baseMax, negatives
+  function makeOperand({baseMin, baseMax, negatives}, prevOperand, type) {
     console.log('max before', baseMax);
     let operand = null;
     if (prevOperand !== null) {
@@ -213,7 +211,8 @@ function MathProblem() {
     console.log('new operand', operand);
     console.log('prevOp', prevOperand);
     console.log('max after', baseMax);
-    operand = (operand !== null) ? operand : Math.floor(Math.random() * (baseMax/*+1*/ - baseMin) * difficultyFactor) + baseMin;
+    // the baseMax+1 is so that the actual baseMax can be hit instead of <baseMax (due to Math.floor)
+    operand = (operand !== null) ? operand : Math.floor(Math.random() * (baseMax+1 - baseMin)) + baseMin;
     return (negatives && Math.random() > .5) ? operand *= -1 : operand;
   }
 
