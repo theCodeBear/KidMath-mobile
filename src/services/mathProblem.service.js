@@ -94,7 +94,7 @@ function MathProblem() {
     let operands = [];
     for (let i=0; i<options.operands; i++)
       operands.push(makeOperand(options));
-    answer = operands.reduce((prev, next) => prev + next, 0);
+    answer = sum(operands);
     return operands;
   }
 
@@ -130,9 +130,12 @@ function MathProblem() {
         break;
     }
     let operands = [];
-    for (let i=0; i<options.operands; i++)
-      operands.push(makeOperand(options));
-    answer = operands.reduce((prev, next) => prev - next, operands[0]*2);
+    for (let i=0; i<options.operands; i++) {
+      console.log('ops', operands);
+      operands.push(makeOperand(options, (i && !options.negatives) ? difference(operands.slice(0,i)) : null, 'subtract'));
+    }
+    answer = difference(operands);
+    console.log('ans', answer);
     return operands;
   }
 
@@ -171,7 +174,7 @@ function MathProblem() {
     let operands = [];
     for (let i=0; i<options.operands; i++)
       operands.push(makeOperand(options));
-    answer = operands.reduce((prev, next) => prev * next, 1);
+    answer = product(operands);
     return operands;
   }
 
@@ -191,7 +194,6 @@ function MathProblem() {
       case '5':
         options.difficultyFactor = 3;
         options.negatives = true;
-        options.operands = 3;
         break;
       case '6':
         options.difficultyFactor = 200;
@@ -200,7 +202,6 @@ function MathProblem() {
       case '7':
         options.difficultyFactor = 200;
         options.negatives = true;
-        options.operands = 3;
         break;
       default:
         break;
@@ -208,15 +209,36 @@ function MathProblem() {
     let operands = [];
     for (let i=0; i<options.operands; i++)
       operands.push(makeOperand(options));
-    answer = operands.reduce((prev, next) => prev / (next || 1), Math.pow(operands[0],2));
+    answer = quotient(operands);
     return operands;
   }
 
   // options: baseMin, baseMax, difficultyFactor, negatives
-  function makeOperand({baseMax, difficultyFactor, negatives}) {
-    console.log('diff', difficultyFactor);
+  function makeOperand({baseMax, difficultyFactor, negatives}, prevOperand, type) {
+    console.log('max before', baseMax);
+    if (prevOperand !== null) {
+      if (type === 'subtract') baseMax = prevOperand;
+    }
+    console.log('prevOp', prevOperand);
+    console.log('max after', baseMax);
     let operand = Math.floor(Math.random() * (baseMax+1) * difficultyFactor);
     return (negatives && Math.random() > .5) ? operand *= -1 : operand;
+  }
+
+  function sum(operands) {
+    return operands.reduce((prev, next) => prev + next, 0);
+  }
+
+  function difference(operands) {
+    return operands.reduce((prev, next) => prev - next, operands[0]*2);
+  }
+
+  function product(operands) {
+    return operands.reduce((prev, next) => prev * next, 1);
+  }
+
+  function quotient(operands) {
+    return operands.reduce((prev, next) => prev / (next || 1), Math.pow(operands[0],2));
   }
 
 }
