@@ -45,22 +45,6 @@ function MathProblem() {
 
   function addition(level) {
     const options = { baseMin: 0, baseMax: 10, operands: 2, difficultyFactor: 1, negatives: false };
-    // if (level === 2) options.difficultyFactor = 2;
-    // else if (level === 3) {
-    //   options.difficultyFactor = 2;
-    //   options.negatives = true;
-    // } else if (level === 4) {
-    //   options.difficultyFactor = 10;
-    //   options.negatives = true;
-    // } else if (level === 5) {
-    //   options.difficultyFactor = 10;
-    //   options.negatives = true;
-    //   options.operands = 3;
-    // } else if (level === 6) {
-    //   options.difficultyFactor = 1000;
-    //   options.negatives = true;
-    //   options.operands = 3;
-    // }
     switch(level) {
       case '2':
         options.difficultyFactor = 2;
@@ -141,39 +125,42 @@ function MathProblem() {
 
   function multiplication(level) {
     const options = { baseMin: 0, baseMax: 5, operands: 2, difficultyFactor: 1, negatives: false };
+    let specialRules;
     switch(level) {
-      case '2':
+      case '1':     // second operand only 1, 2, or 3
+        options.baseMax = 10;
+        options.baseMin = 1;
+        specialRules = 'oneTwoThree';
+        break;
+      case '3':     // squares only
+        options.difficultyFactor = 2;
+        specialRules = 'sameAsLast';
+        break;
+      case '4':
         options.difficultyFactor = 2;
         options.negatives = true;
         break;
-      case '3':// maybe do one level of just doubles, one of triples, and
-        // one of 1-10 * only 5,10,15,or 20
-
-        break;
-      case '4':
-        options.difficultyFactor = 3;
-        options.negatives = true;
-        break;
-      case '5':
-        options.difficultyFactor = 3;
+      case '5':  // doing cubes only, and only up to 5 (with negatives)
         options.negatives = true;
         options.operands = 3;
+        specialRules = 'sameAsLast';
         break;
-      case '6':
-        options.difficultyFactor = 200;
+      case '6':  // doing cubes only, and up to 10 (with negatives)
+        options.difficultyFactor = 2;
         options.negatives = true;
+        options.operands = 3;
+        specialRules = 'sameAsLast';
         break;
       case '7':
-        options.difficultyFactor = 200;
+        options.difficultyFactor = 3;
         options.negatives = true;
-        options.operands = 3;
         break;
-      default:
+      default:  // uses default options
         break;
     }
     let operands = [];
     for (let i=0; i<options.operands; i++)
-      operands.push(makeOperand(options));
+      operands.push(makeOperand(options, i ? operands[i-1] : null, specialRules));
     answer = product(operands);
     return operands;
   }
@@ -214,14 +201,19 @@ function MathProblem() {
   }
 
   // options: baseMin, baseMax, difficultyFactor, negatives
-  function makeOperand({baseMax, difficultyFactor, negatives}, prevOperand, type) {
+  function makeOperand({baseMin, baseMax, difficultyFactor, negatives}, prevOperand, type) {
     console.log('max before', baseMax);
+    let operand = null;
     if (prevOperand !== null) {
+      console.log('prevOperand is true');
       if (type === 'subtract') baseMax = prevOperand;
+      else if (type === 'oneTwoThree') baseMax = 3;
+      else if (type === 'sameAsLast') operand = prevOperand;
     }
+    console.log('new operand', operand);
     console.log('prevOp', prevOperand);
     console.log('max after', baseMax);
-    let operand = Math.floor(Math.random() * (baseMax+1) * difficultyFactor);
+    operand = (operand !== null) ? operand : Math.floor(Math.random() * (baseMax/*+1*/ - baseMin) * difficultyFactor) + baseMin;
     return (negatives && Math.random() > .5) ? operand *= -1 : operand;
   }
 
