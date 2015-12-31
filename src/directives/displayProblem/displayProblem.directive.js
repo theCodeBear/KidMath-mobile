@@ -21,9 +21,15 @@ function kmDisplayProblem() {
 kmDisplayProblemCtrl.$inject = ['$scope', 'MathProblem'];
 function kmDisplayProblemCtrl($scope, MathProblem) {
   let vmDisplayProblem = this;
-  vmDisplayProblem.problem = MathProblem.createProblem(vmDisplayProblem.operator, vmDisplayProblem.level);
+
+  displayProblem(vmDisplayProblem.operator, vmDisplayProblem.level);
 
   $scope.$on('correct answer', () => {
-    vmDisplayProblem.problem = MathProblem.createProblem(vmDisplayProblem.operator, vmDisplayProblem.level);
+    displayProblem(vmDisplayProblem.operator, vmDisplayProblem.level);
   });
+
+  function displayProblem(operator, level) {
+    vmDisplayProblem.problem = MathProblem.createProblem(operator, level);
+    vmDisplayProblem.operandLength = vmDisplayProblem.problem.operands.length;
+  }
 }

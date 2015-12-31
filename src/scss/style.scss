@@ -27,15 +27,16 @@ output {
   line-height: 1em;
   font-weight: 900;
 
-  .first-number {
+  .operands {
     display: inline-block;
   }
 
-  .operand {
-    display: inline-block;
+  .font-smaller {
+    font-size: 0.7em;
+    line-height: 0.8em;
   }
 
-  .second-number {
+  .operator {
     display: inline-block;
   }
 }

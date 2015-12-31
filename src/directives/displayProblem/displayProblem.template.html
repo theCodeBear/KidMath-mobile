@@ -1,9 +1,9 @@
 <div class='math-problem text-center'>
-  <div class='row'>
-    <div class='first-number col col-offset-33 col-50 text-right'>{{vmDisplayProblem.problem.operands[0]}}</div>
+  <div class='row' ng-repeat='operand in vmDisplayProblem.problem.operands.slice(0,-1) track by $index'>
+    <div ng-class='{"font-smaller": vmDisplayProblem.operandLength == 3}' class='operands col col-offset-33 col-50 text-right'>{{operand}}</div>
   </div>
   <div class='row'>
-    <div class='operand col col-33 text-right' ng-bind-html='vmDisplayProblem.problem.operator'></div>
-    <div class='second-number col col-50 text-right'>{{vmDisplayProblem.problem.operands[1]}}</div>
+    <div ng-class='{"font-smaller": vmDisplayProblem.operandLength == 3}' class='operator col col-33 text-right' ng-bind-html='vmDisplayProblem.problem.operator'></div>
+    <div ng-class='{"font-smaller": vmDisplayProblem.operandLength == 3}' class='operands col col-50 text-right'>{{vmDisplayProblem.problem.operands[vmDisplayProblem.operandLength-1]}}</div>
   </div>
 </div>
