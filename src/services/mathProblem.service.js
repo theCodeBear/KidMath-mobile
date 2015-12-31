@@ -19,6 +19,8 @@ function MathProblem() {
 
 
   function createProblem(operator, level) {
+    remainder = null;
+    answer = null;
     let problem = {};
     problem.operator = Array.isArray(operator) ? chooseOperator(operator) : operator;
     problem.operands = makeProblem(problem.operator, level);
@@ -26,6 +28,12 @@ function MathProblem() {
   }
 
   function checkAnswer(userAnswer) {
+    if (remainder) {
+      if (userAnswer.indexOf('r') !== -1) {
+        let divisionAnswer = userAnswer.split(' r ');
+        return (+ divisionAnswer[0] === answer && + divisionAnswer[1] === remainder);
+      } else return false;
+    }
     return answer === + userAnswer
   }
 
@@ -148,7 +156,8 @@ function MathProblem() {
         specialRules = 'sameAsLast';
         break;
       case '7':
-        options.baseMax = 15;
+        options.baseMax = 20;
+        options.baseMin = 6
         options.negatives = true;
         break;
       default:
@@ -214,9 +223,9 @@ function MathProblem() {
     return (negatives && Math.random() > .5) ? operand *= -1 : operand;
   }
 
-  function makeDivisionOperands({dividendMaxSqrt, dividendMax, negatives, remainder}) {
+  function makeDivisionOperands({dividendMaxSqrt, dividendMax, negatives, remainder:useRemainder}) {
     let divisor, dividend;
-    if (remainder) {
+    if (useRemainder) {
       dividend = Math.floor(Math.random() * (dividendMax + 1));
       divisor = Math.ceil(Math.random() * (dividendMax / 5));
       answer = Math.floor(dividend / divisor);

@@ -8,23 +8,24 @@
 
 <div class='keypad col col-100'>
   <div class='row'>
-    <button class='col col-33' ng-click='vmKeypad.updateAnswer(1)'>1</button>
-    <button class='col col-33' ng-click='vmKeypad.updateAnswer(2)'>2</button>
-    <button class='col col-33' ng-click='vmKeypad.updateAnswer(3)'>3</button>
+    <button class='col col-33' ng-click='vmKeypad.updateAnswer("1")'>1</button>
+    <button class='col col-33' ng-click='vmKeypad.updateAnswer("2")'>2</button>
+    <button class='col col-33' ng-click='vmKeypad.updateAnswer("3")'>3</button>
   </div>
   <div class='row'>
-    <button class='col col-33' ng-click='vmKeypad.updateAnswer(4)'>4</button>
-    <button class='col col-33' ng-click='vmKeypad.updateAnswer(5)'>5</button>
-    <button class='col col-33' ng-click='vmKeypad.updateAnswer(6)'>6</button>
+    <button class='col col-33' ng-click='vmKeypad.updateAnswer("4")'>4</button>
+    <button class='col col-33' ng-click='vmKeypad.updateAnswer("5")'>5</button>
+    <button class='col col-33' ng-click='vmKeypad.updateAnswer("6")'>6</button>
   </div>
   <div class='row'>
-    <button class='col col-33' ng-click='vmKeypad.updateAnswer(7)'>7</button>
-    <button class='col col-33' ng-click='vmKeypad.updateAnswer(8)'>8</button>
-    <button class='col col-33' ng-click='vmKeypad.updateAnswer(9)'>9</button>
+    <button class='col col-33' ng-click='vmKeypad.updateAnswer("7")'>7</button>
+    <button class='col col-33' ng-click='vmKeypad.updateAnswer("8")'>8</button>
+    <button class='col col-33' ng-click='vmKeypad.updateAnswer("9")'>9</button>
   </div>
   <div class='row'>
-    <button class='col col-33' ng-click='vmKeypad.updateAnswer(0)'>0</button>
-    <button class='col col-33' ng-click='vmKeypad.updateAnswer(".")'>.</button>
+    <button class='col col-33' ng-click='vmKeypad.updateAnswer("0")'>0</button>
+    <button class='col col-33' ng-click='vmKeypad.updateAnswer(".")' ng-if='vmKeypad.decimalOrRemainder == "decimal"'>.</button>
+    <button class='col col-33 remainder-button' ng-click='vmKeypad.updateAnswer(" r ")' ng-if='vmKeypad.decimalOrRemainder == "remainder"'>Remainder</button>
     <button class='col col-33' ng-click='vmKeypad.updateAnswer("-")'>-</button>
   </div>
   <div class='row'>
