@@ -54,6 +54,7 @@ function kmKeypadCtrl($rootScope, MathProblem) {
       $rootScope.$broadcast('correct answer');
     } else {    // answer wrong
       console.log('WRONG');
+      $rootScope.$broadcast('wrong answer');
     }
   }
 }

@@ -1,3 +1,10 @@
+/* Overriding Ionic styles */
+.bar .title + .buttons {
+  right: 0 !important;
+}
+/* End overriding Ionic styles */
+
+
 .login-button {
   margin-top: 2em;
 
@@ -57,6 +64,25 @@ output {
       color: whitesmoke;
     }
   }
+}
+
+.score-counter {
+  color: white;
+  width: 43px;
+  height: 43px;
+  line-height: 43px;
+  font-size: 2.6em;
+  font-weight: 200;
+  text-align: center;
+  margin: -5px 0 0 0 !important;
+}
+
+.wrong {
+  background-color: red;
+}
+
+.correct {
+  background-color: green;
 }
 
 .remainder-button {
