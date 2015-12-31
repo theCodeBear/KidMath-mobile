@@ -4,7 +4,7 @@ angular.module('kidmath')
 
 .directive('kmProblemCounter', kmProblemCounter);
 
-function kmProblemCounter($state) {
+function kmProblemCounter() {
   return {
     restrict: 'E',
     scope: {},
