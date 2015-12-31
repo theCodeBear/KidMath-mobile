@@ -128,7 +128,7 @@ function MathProblem() {
   }
 
   function multiplication(level) {
-    const options = { baseMin: 0, baseMax: 5, operands: 2, negatives: false };
+    const options = { baseMin: 0, baseMax: 6, operands: 2, negatives: false };
     let specialRules;
     switch(level) {
       case '1':     // second operand only 1, 2, or 3
@@ -142,22 +142,25 @@ function MathProblem() {
         break;
       case '4':
         options.baseMax = 10;
+        options.baseMin = 1;
         options.negatives = true;
         break;
-      case '5':  // doing cubes only, and only up to 5 (with negatives)
+      case '5':  // doing cubes only, and up to 10 (with negatives)
+        options.baseMax = 10;
+        options.baseMin = 2;
         options.negatives = true;
         options.operands = 3;
         specialRules = 'sameAsLast';
         break;
-      case '6':  // doing cubes only, and up to 10 (with negatives)
-        options.baseMax = 10;
+      case '6':  // doing squares only, 11 to 20 (with negatives)
+        options.baseMax = 20;
+        options.baseMin = 11;
         options.negatives = true;
-        options.operands = 3;
         specialRules = 'sameAsLast';
         break;
       case '7':
         options.baseMax = 20;
-        options.baseMin = 6
+        options.baseMin = 6;
         options.negatives = true;
         break;
       default:
