@@ -2,6 +2,10 @@
 .bar .title + .buttons {
   right: 0 !important;
 }
+
+.popup-buttons {
+  display: block;
+}
 /* End overriding Ionic styles */
 
 
@@ -71,6 +75,11 @@ output {
   border: 4px solid gray !important;
   margin-right: 10px;
   line-height: 1em !important;
+}
+
+.level-popup-buttons {
+  min-width: 100% !important;
+  margin-bottom: 10px;
 }
 
 .score-counter {
