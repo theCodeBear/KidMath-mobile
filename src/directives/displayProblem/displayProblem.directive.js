@@ -22,14 +22,22 @@ kmDisplayProblemCtrl.$inject = ['$scope', 'MathProblem'];
 function kmDisplayProblemCtrl($scope, MathProblem) {
   let vmDisplayProblem = this;
 
-  displayProblem(vmDisplayProblem.operator, vmDisplayProblem.level);
+  let randomizeLevel = vmDisplayProblem.level ? false : true;
+  vmDisplayProblem.level = returnLevel(vmDisplayProblem.level, randomizeLevel);
+  displayProblem(vmDisplayProblem.operator, returnLevel(vmDisplayProblem.level, randomizeLevel));//vmDisplayProblem.level);
 
   $scope.$on('correct answer', () => {
-    displayProblem(vmDisplayProblem.operator, vmDisplayProblem.level);
+    displayProblem(vmDisplayProblem.operator, returnLevel(vmDisplayProblem.level, randomizeLevel)); //vmDisplayProblem.level);
   });
 
   function displayProblem(operator, level) {
     vmDisplayProblem.problem = MathProblem.createProblem(operator, level);
     vmDisplayProblem.operandLength = vmDisplayProblem.problem.operands.length;
+  }
+
+  function returnLevel(level, randomize) {
+    if (randomize) {
+      return Math.ceil(Math.random() * 7).toString();
+    } else return level;
   }
 }

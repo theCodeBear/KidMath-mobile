@@ -20,23 +20,32 @@ kmLevelButtonCtrl.$inject = ['$rootScope', '$scope', '$state', '$ionicPopup'];
 function kmLevelButtonCtrl($rootScope, $scope, $state, $ionicPopup) {
   let vmLevelButton = this;
 
+  let iconText = '<i class="icon ion-ios-clock-outline adjust-clock"></i>';
   vmLevelButton.stateName = $state.current.name;
-  vmLevelButton.level = $state.params.level;
+  vmLevelButton.level = $state.params.level || iconText;
   vmLevelButton.showPopup = showPopup;
+
   let levelButtons = [];
   for (let i=0; i<7; i++) {
     levelButtons.push({
       text: `Level ${i+1}`,
-      type: 'button-positive level-popup-buttons',
+      type: 'button button-positive level-popup-buttons',
       onTap(e) {
         $state.go('app.problems', { type: $state.params.type, level: i+1 });
       }
     });
   }
+  levelButtons.push({
+    text: iconText,
+    type: 'button button-positive level-popup-buttons',
+    onTap(e) {
+      $state.go('app.timedQuiz', { type: $state.params.type });
+    }
+  });
 
   $rootScope.$on('$stateChangeSuccess', (event, toState, toParams) => {
     vmLevelButton.stateName = toState.name;
-    vmLevelButton.level = toParams.level;
+    vmLevelButton.level = toParams.level || iconText;
   });
 
   function showPopup() {

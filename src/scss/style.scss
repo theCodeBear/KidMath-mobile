@@ -75,6 +75,13 @@ output {
   border: 4px solid gray !important;
   margin-right: 10px;
   line-height: 1em !important;
+  margin-top: -4px;
+  width: 41px;
+  height: 41px;
+}
+
+.adjust-clock {
+  margin-left: -2px;
 }
 
 .level-popup-buttons {

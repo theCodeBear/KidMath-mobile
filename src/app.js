@@ -52,6 +52,15 @@ angular.module('kidmath', ['ionic'])
         template: '<km-problems></km-problems>'
       }
     }
+  })
+
+  .state('app.timedQuiz', {
+    url: '/quiz/:type',
+    views: {
+      'menuContent': {
+        template: '<km-timed-quiz></km-timed-quiz>'
+      }
+    }
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');

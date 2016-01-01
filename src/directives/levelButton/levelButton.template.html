@@ -1,3 +1,1 @@
-<button class='button level-button' ng-if='vmLevelButton.stateName == "app.problems"' ng-click='vmLevelButton.showPopup()'>
-  {{ vmLevelButton.level }}
-</button>
+<button class='button level-button' ng-if='vmLevelButton.stateName == "app.problems" || vmLevelButton.stateName == "app.timedQuiz"' ng-click='vmLevelButton.showPopup()' ng-bind-html='vmLevelButton.level'></button>
