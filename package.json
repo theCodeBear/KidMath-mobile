@@ -23,8 +23,11 @@
     "jshint-stylish": "^2.1.0",
     "shelljs": "^0.3.0"
   },
-  "cordovaPlugins": [],
+  "cordovaPlugins": [
+    "cordova-plugin-splashscreen"
+  ],
   "cordovaPlatforms": [
-    "ios"
+    "ios",
+    "android"
   ]
 }
