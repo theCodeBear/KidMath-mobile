@@ -28,18 +28,21 @@ output {
   width: 60%;
   border: 2px solid black;
   line-height: 1.2em;
-  margin-bottom: 1em;
+  margin-bottom: 1vh;
   padding-right: 5px;
   padding-left: 5px;
 }
 
 .math-problem {
-  font-size: 4em;
+  font-size: 9vh;//4em;
   line-height: 1em;
   font-weight: 900;
 
+  .row { padding: 0; }
+
   .operands {
     display: inline-block;
+    padding-right: 15px;
   }
 
   .font-smaller {
@@ -60,7 +63,7 @@ output {
   button {
     border: 1px solid gray;
     display: inline;
-    font-size: 2.3em;
+    font-size: 8vw;
     font-weight: 200;
 
     &:active {
@@ -119,7 +122,7 @@ output {
 }
 
 .answer-button {
-  font-size: 2.3em;
+  font-size: 9vw;//2.3em;
   width: 80%;
   font-weight: 600;
   padding-top: 10px;
