@@ -48,12 +48,10 @@ function kmKeypadCtrl($rootScope, MathProblem) {
   }
 
   function checkAnswer(answer) {
-    // answer correct
     if (MathProblem.checkAnswer(answer)) {
       vmKeypad.reset();
       $rootScope.$broadcast('correct answer');
-    } else {    // answer wrong
-      console.log('WRONG');
+    } else {
       $rootScope.$broadcast('wrong answer');
     }
   }

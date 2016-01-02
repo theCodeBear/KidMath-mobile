@@ -17,8 +17,8 @@ function kmProblemCounter() {
   };
 }
 
-kmProblemCounterCtrl.$inject = ['$scope', '$state', '$rootScope'];
-function kmProblemCounterCtrl($scope, $state, $rootScope) {
+kmProblemCounterCtrl.$inject = ['$scope', '$state', '$rootScope', 'Score'];
+function kmProblemCounterCtrl($scope, $state, $rootScope, Score) {
   let vmProblemCounter = this;
 
   vmProblemCounter.correct = {count: 0};
@@ -31,6 +31,6 @@ function kmProblemCounterCtrl($scope, $state, $rootScope) {
     vmProblemCounter.wrong.count = 0;
   });
 
-  $scope.$on('correct answer', () => vmProblemCounter.correct.count++);
-  $scope.$on('wrong answer', () => vmProblemCounter.wrong.count++)
+  $scope.$on('correct answer', () => Score.setCorrect(++vmProblemCounter.correct.count));
+  $scope.$on('wrong answer', () => Score.setWrong(++vmProblemCounter.wrong.count));
 }

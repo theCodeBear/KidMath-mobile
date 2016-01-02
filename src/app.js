@@ -61,6 +61,16 @@ angular.module('kidmath', ['ionic'])
         template: '<km-timed-quiz></km-timed-quiz>'
       }
     }
+  })
+
+  .state('app.quizResults', {
+    url: '/quiz-resuts',
+    views: {
+      'menuContent': {
+        template: '<km-quiz-results></km-quiz-results>'
+      }
+    },
+    cache: false
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');

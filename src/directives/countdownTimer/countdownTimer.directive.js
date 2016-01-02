@@ -22,6 +22,7 @@ function kmTimerCtrl($rootScope, $interval, $state) {
   let vmTimer = this;
 
   let intervalTimer;
+  let finished = false;
   vmTimer.tick = vmTimer.seconds;
   vmTimer.stateName = $state.current.name;
 
@@ -30,7 +31,9 @@ function kmTimerCtrl($rootScope, $interval, $state) {
   $rootScope.$on('$stateChangeSuccess', (e, toState, toParams, fromState) => {
     vmTimer.stateName = toState.name;
     if (vmTimer.stateName === 'app.timedQuiz') startCountdown();
-    if (fromState.name === 'app.timedQuiz') endQuiz();
+    if (fromState.name === 'app.timedQuiz' && toState.name !== 'app.quizResults') {
+      finished = endQuiz(finished);
+    }
   });
 
 
@@ -38,15 +41,22 @@ function kmTimerCtrl($rootScope, $interval, $state) {
     let start = new Date().getTime();
     let elapsedSecs = 0, elapsedMillis = 0;
     intervalTimer = $interval(() => {
-      if (vmTimer.tick === 0) return endQuiz();
-      elapsedMillis = new Date().getTime() - start;
-      elapsedSecs = Math.floor(elapsedMillis/1000);
-      vmTimer.tick = vmTimer.seconds - elapsedSecs;
+      if (vmTimer.tick === 0) {
+        finished = endQuiz(finished = true);
+      } else {
+        elapsedMillis = new Date().getTime() - start;
+        elapsedSecs = Math.floor(elapsedMillis/1000);
+        vmTimer.tick = vmTimer.seconds - elapsedSecs;
+      }
     });
   }
 
-  function endQuiz() {
-    alert('quiz time up');
+  function endQuiz(finished) {
+    if (finished) {
+      vmTimer.tick = vmTimer.seconds;
+      $state.go('app.quizResults');
+    } else ;//mark in stats that quiz wasn't finished
     $interval.cancel(intervalTimer);
+    return false;
   }
 }
